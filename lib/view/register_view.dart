@@ -1,76 +1,139 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:modal_progress_hud_nsn/modal_progress_hud_nsn.dart';
 
+import '../constants.dart';
+import '../helper/show_snack_Bar_helper.dart';
 import '../widget/custom_button_widget.dart';
-import '../widget/custom_textfield_widget.dart';
+import '../widget/custom_from_textfield_widget.dart';
 
-class RegisterView extends StatelessWidget {
+class RegisterView extends StatefulWidget {
   const RegisterView({super.key});
+
+  static String id = 'RegisterView';
+
+  @override
+  State<RegisterView> createState() => _RegisterViewState();
+}
+
+class _RegisterViewState extends State<RegisterView> {
+  String? email;
+
+  String? password;
+
+  bool isLoading = false;
+
+  GlobalKey<FormState> formKey = GlobalKey();
 
   @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
-    return Scaffold(
-      backgroundColor: Colors.purple,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 12),
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              SizedBox(
-                height: size.height * 0.10,
-              ),
-              Image.asset(
-                'assets/images/chat_image.png',
-                height: size.height * 0.30,
-                width: size.height * 0.30,
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Text('KNK CHAT'),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
-              const Row(
+    return ModalProgressHUD(
+      inAsyncCall: isLoading,
+      child: Scaffold(
+        backgroundColor: kPrimaryColor,
+        body: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: SingleChildScrollView(
+            child: Form(
+              key: formKey,
+              child: Column(
                 children: [
-                  Text('Register'),
+                  SizedBox(
+                    height: size.height * 0.10,
+                  ),
+                  Image.asset(
+                    kLogo,
+                    height: size.height * 0.30,
+                    width: size.height * 0.30,
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  const Text('KNK CHAT'),
+                  SizedBox(
+                    height: size.height * 0.05,
+                  ),
+                  const Row(
+                    children: [
+                      Text('Register'),
+                    ],
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFormFieldWidget(
+                    onChanged: (data) {
+                      email = data;
+                    },
+                    text: 'Email',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomTextFormFieldWidget(
+                    onChanged: (data) {
+                      password = data;
+                    },
+                    text: 'Password',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  CustomButtonWidget(
+                    onTap: () async {
+                      if (formKey.currentState!.validate()) {
+                        isLoading = true;
+                        setState(() {});
+                        try {
+                          await registerUser();
+                          Navigator.pop(context);
+                        } on FirebaseAuthException catch (e) {
+                          if (e.code == 'weak-password') {
+                            showSnackBar(context, 'weak password');
+                          } else if (e.code == 'email-already-in-use') {
+                            showSnackBar(context, 'email already in use');
+                          }
+                        } catch (e) {
+                          showSnackBar(context, '$e');
+                        }
+                        isLoading = false;
+                        setState(() {});
+                      } else {}
+                    },
+                    text: 'Register',
+                  ),
+                  const SizedBox(
+                    height: 10,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(' have an accunt? '),
+                      GestureDetector(
+                        onTap: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text(' Login'),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: size.height * 0.20,
+                  ),
                 ],
               ),
-              const SizedBox(
-                height: 10,
-              ),
-              const CustomTextFieldWidget(
-                text: 'Name',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const CustomTextFieldWidget(
-                text: 'Password',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const CustomButtonWidget(
-                text: 'Register',
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text('dont\'t have an accunt? '),
-                  Text(' Register'),
-                ],
-              ),
-              SizedBox(
-                height: size.height * 0.20,
-              ),
-            ],
+            ),
           ),
         ),
       ),
+    );
+  }
+
+  Future<void> registerUser() async {
+    final user = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: email!,
+      password: password!,
     );
   }
 }
