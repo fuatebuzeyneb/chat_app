@@ -7,6 +7,7 @@ class CustomTextFormFieldWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      style: const TextStyle(color: Colors.white),
       validator: (data) {
         if (data!.isEmpty) {
           return 'field is required';
@@ -17,12 +18,13 @@ class CustomTextFormFieldWidget extends StatelessWidget {
       focusNode: FocusNode(),
       decoration: InputDecoration(
           labelText: text,
+          labelStyle: const TextStyle(color: Colors.white),
           border: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
           ),
           enabledBorder: OutlineInputBorder(
             borderRadius: BorderRadius.circular(12),
-            borderSide: const BorderSide(color: Colors.black),
+            borderSide: const BorderSide(color: Colors.white),
           )),
     );
   }

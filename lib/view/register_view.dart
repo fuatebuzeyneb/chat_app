@@ -50,13 +50,19 @@ class _RegisterViewState extends State<RegisterView> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('KNK CHAT'),
+                  const Text(
+                    'KnK CHAT',
+                    style: TextStyle(color: Colors.white, fontSize: 28),
+                  ),
                   SizedBox(
                     height: size.height * 0.05,
                   ),
                   const Row(
                     children: [
-                      Text('Register'),
+                      Text(
+                        'Register',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ],
                   ),
                   const SizedBox(
@@ -109,12 +115,21 @@ class _RegisterViewState extends State<RegisterView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(' have an accunt? '),
+                      const Text(
+                        ' have an accunt? ',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pop(context);
                         },
-                        child: const Text(' Login'),
+                        child: const Text(
+                          ' Login',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),

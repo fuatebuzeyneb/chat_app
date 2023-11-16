@@ -51,17 +51,23 @@ class _LoginViewState extends State<LoginView> {
                   const SizedBox(
                     height: 10,
                   ),
-                  const Text('KNK CHAT'),
+                  const Text(
+                    'KnK CHAT',
+                    style: TextStyle(color: Colors.white, fontSize: 28),
+                  ),
                   SizedBox(
                     height: size.height * 0.05,
                   ),
                   const Row(
                     children: [
-                      Text('Login'),
+                      Text(
+                        'Login',
+                        style: TextStyle(color: Colors.white, fontSize: 18),
+                      ),
                     ],
                   ),
                   const SizedBox(
-                    height: 10,
+                    height: 15,
                   ),
                   CustomTextFormFieldWidget(
                     onChanged: (data) {
@@ -113,12 +119,21 @@ class _LoginViewState extends State<LoginView> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text('dont\'t have an accunt? '),
+                      const Text(
+                        'dont\'t have an accunt? ',
+                        style: TextStyle(color: Colors.white, fontSize: 14),
+                      ),
                       GestureDetector(
                         onTap: () {
                           Navigator.pushNamed(context, RegisterView.id);
                         },
-                        child: const Text(' Register'),
+                        child: const Text(
+                          ' Register',
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
                       ),
                     ],
                   ),

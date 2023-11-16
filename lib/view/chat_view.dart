@@ -31,21 +31,9 @@ class ChatView extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               automaticallyImplyLeading: false,
-              title: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Image.asset(
-                    kLogo,
-                    width: 50,
-                    height: 50,
-                  ),
-                  const SizedBox(
-                    width: 5,
-                  ),
-                  const Text('ChatApp'),
-                ],
-              ),
+              title: const Text('KnK Chat'),
               backgroundColor: kPrimaryColor,
+              centerTitle: true,
             ),
             body: Column(
               children: [

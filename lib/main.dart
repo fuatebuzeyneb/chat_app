@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Chat App',
+      title: 'KnK Chat',
       routes: {
         LoginView.id: (context) => const LoginView(),
         RegisterView.id: (context) => const RegisterView(),
